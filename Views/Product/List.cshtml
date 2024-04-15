@@ -1,22 +1,43 @@
 @model shopapp.ui.ViewModels.ProductViewModel
 
+@{
+    var popularClass = Model.Products.Count > 5 ? "popular" : "";
+    var products = Model.Products;
+    var CategoryName = Model.Category.Name;
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product</title>
+    <style>
+        .popular{
+            color: green;
+            font-weight: 700;
+        }
+    </style>
 </head>
 <body>
     <div>
-        <h1>@Model.Category.Name</h1>
-        @foreach(var p in @Model.Products)
-        {
-            <p>@p.Name</p>
-            <p>@p.Price</p>
-            <p>@p.Description</p>
-            <hr>
-        }
+
+            <ul>
+                <h1 class="@popularClass">@CategoryName</h1>
+                @if(@products.Count != 0)
+                {
+                    @foreach(var p in @products)
+                    {
+                        <li>
+                            <p>@p.Name</p>
+                            <p>@p.Price</p>
+                            <p>@p.Description</p>
+                            <hr>
+                        </li>
+                    }
+                }else{<p>Product Tapilmadi</p>}
+            </ul>
+
     </div>
 </body>
 </html>
