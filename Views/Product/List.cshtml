@@ -1,3 +1,5 @@
+@model shopapp.ui.ViewModels.ProductViewModel
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +8,15 @@
     <title>Product</title>
 </head>
 <body>
-    List / Product
+    <div>
+        <h1>@Model.Category.Name</h1>
+        @foreach(var p in @Model.Products)
+        {
+            <p>@p.Name</p>
+            <p>@p.Price</p>
+            <p>@p.Description</p>
+            <hr>
+        }
+    </div>
 </body>
 </html>

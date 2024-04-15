@@ -1,3 +1,5 @@
+@model Product
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +8,17 @@
     <title>Product</title>
 </head>
 <body>
-    Prodcut / Index
+    @* <h1>@ViewData["Category"]</h1>
+    <h4>@(((Product)ViewData["Product"]).Name)</h4>
+    <h4>@(((Product)ViewData["Product"]).Description)</h4>
+    <h4>@(((Product)ViewData["Product"]).Price)</h4> *@  
+
+    <h1>@ViewData["Category"]</h1>
+    <p>@Model.Name</p>
+    <p>@Model.Price</p>
+    <p>@Model.Description</p>
+
+    
+
 </body>
 </html>
