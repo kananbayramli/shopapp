@@ -23,7 +23,7 @@ namespace shopapp.ui.Controllers
                 new Product{Name="IPhone 8 plus", Description="Cox ela telefon", Price=1000, IsApproved=true},
                 new Product{Name="IPhone 11", Description="Yaxwi telefon", Price=1200, IsApproved=true},
                 new Product{Name="IPhone 13 Pro", Description="Yaxwi telefon", Price=1200},
-                new Product{Name="IPhone 13 Pro Max", Description="Yaxwi telefon", Price=1200, IsApproved=false}
+                new Product{Name="IPhone 13 Pro", Description="Yaxwi telefon", Price=1200, IsApproved=false}
             };
             var category = new Category {Name = "Telefonlar", Description="Telefon Kataloq"};
             
