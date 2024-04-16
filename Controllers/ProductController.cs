@@ -25,12 +25,18 @@ namespace shopapp.ui.Controllers
                 new Product{Name="IPhone 13 Pro", Description="Yaxwi telefon", Price=1200},
                 new Product{Name="IPhone 13 Pro", Description="Yaxwi telefon", Price=1200, IsApproved=false}
             };
-            var category = new Category {Name = "Telefonlar", Description="Telefon Kataloq"};
+
+            var categories = new List<Category>()
+            {
+                new Category{Name="Telefon", Description="Telefonlar"},
+                new Category{Name="Notebook", Description="Noutbooklar"},
+                new Category{Name="Electronik", Description="Elektronikler"}
+            };
             
             var productViewModel = new ProductViewModel()
             {
                 Products = products,
-                Category = category
+                Categories = categories
             };
             return View(productViewModel);
         }

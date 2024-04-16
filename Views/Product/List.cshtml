@@ -1,9 +1,9 @@
-@model shopapp.ui.ViewModels.ProductViewModel
+@model ProductViewModel
 
 @{
     var popularClass = Model.Products.Count > 3 ? "popular" : "";
     var products = Model.Products;
-    var CategoryName = Model.Category.Name;
+    var categories = Model.Categories;
 }
 
 <!DOCTYPE html>
@@ -31,29 +31,30 @@
 
     <main>
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="@popularClass">@CategoryName</h1>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group">
+                    @await Html.PartialAsync("_categories", categories)
                 </div>
             </div>
 
-    <div>            
+            <div class="col-md-9">       
                 @if(@products.Count != 0)
                 {
                     <div class="row">
-                    @foreach(var p in @products)
-                    {
-                        <div class="col-md-3">
-                            @await Html.PartialAsync("_product", p)
-                        </div>
-                    }
+                        @foreach(var p in @products)
+                        {
+                            <div class="col-md-3">
+                                @await Html.PartialAsync("_product", p)
+                            </div>
+                        }
                     </div>
                 }else{
                     @await Html.PartialAsync("_noproduct")
-                }
-            
+                }  
+            </div>
+        </div>
     </div>
-</div>
 </main>
 </body>
 </html>
