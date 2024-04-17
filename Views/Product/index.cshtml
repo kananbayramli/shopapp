@@ -1,24 +1,8 @@
-@model Product
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css">
-</head>
-<body>
-    <!-- Navbar -->
-    @await Html.PartialAsync("_navbar")
-
-
-    <h1>@ViewData["Category"]</h1>
-    <p>@Model.Name</p>
-    <p>@Model.Price</p>
-    <p>@Model.Description</p>
-
-    
-
-</body>
-</html>
+<div class="row">
+    <div class="col-md-3">
+        @await Component.InvokeAsync("Categories")
+    </div>
+    <div class="col-md-9">
+        Prodcut Index
+    </div>
+</div>
