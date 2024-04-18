@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using shopapp.ui.Data;
 using shopapp.ui.Models;
@@ -17,13 +18,20 @@ namespace shopapp.ui.Controllers
             return View(product);
         }
 
-        public IActionResult List()
-        {     
+        public IActionResult List(int? id)
+        {
+            var products = ProductRepository.Products;
+            if(id!=null)
+            {
+                products = products.Where(p => p.CategoryId == id).ToList();
+            }
+
             var productViewModel = new ProductViewModel()
             {
-                Products = ProductRepository.Products,
+                Products = products,
             };
             return View(productViewModel);
+            
         }
 
         public IActionResult Details(int id)

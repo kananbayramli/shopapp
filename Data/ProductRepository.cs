@@ -12,11 +12,16 @@ namespace shopapp.ui.Data
         {
             _products = new List<Product>
             {
-                new Product{ProductId=1, Name="IPhone 8 plus", Description="Cox ela telefon", Price=1000, IsApproved=true, ImageUrl="1.jpg"},
-                new Product{ProductId=2,Name="IPhone 11", Description="Yaxwi telefon", Price=1200, IsApproved=true, ImageUrl="2.jpg"},
-                new Product{ProductId=3,Name="Xiami Red Mi", Description="Yaxwi telefon", Price=1200, ImageUrl="3.jpg"},
-                new Product{ProductId=4,Name="IPhone 13 Pro", Description="Yaxwi telefon", Price=1200, IsApproved=false, ImageUrl="4.jpg"}
+                new Product{ProductId=5, Name="IPhone 8 plus", Description="Cox ela telefon", Price=1000, IsApproved=true, ImageUrl="1.jpg", CategoryId=1},
+                new Product{ProductId=6,Name="IPhone 11", Description="Yaxwi telefon", Price=1200, IsApproved=true, ImageUrl="2.jpg", CategoryId=1},
+                new Product{ProductId=7,Name="Xiami Red Mi", Description="Yaxwi telefon", Price=1200, ImageUrl="3.jpg", CategoryId=1},
+                new Product{ProductId=8,Name="IPhone 13 Pro", Description="Yaxwi telefon", Price=1200, IsApproved=false, ImageUrl="4.jpg", CategoryId=1},
 
+
+                new Product{ProductId=1, Name="Macbook  plus", Description="Cox ela notebook", Price=1000, IsApproved=true, ImageUrl="5.jpg", CategoryId=2},
+                new Product{ProductId=2,Name="Omen 11", Description="Yaxwi masaustu", Price=1200, IsApproved=true, ImageUrl="6.jpg", CategoryId=2},
+                new Product{ProductId=3,Name="Acer Grand", Description="Ela Notebook", Price=1200, ImageUrl="6.jpg", CategoryId=2},
+                new Product{ProductId=4,Name="Samsung PC", Description="Dozumlu notebook", Price=1200, IsApproved=false, ImageUrl="6.jpg", CategoryId=2}
             };
         }
 
