@@ -9,6 +9,9 @@ namespace shopapp.ui.ViewComponents
     {
         public IViewComponentResult Invoke()
         {
+            if(RouteData.Values["action"].ToString() == "List")
+                ViewBag.SelectedCategory = RouteData?.Values["id"];
+                
             var categories = CategoryRepository.Categories;
             return View(categories);
         }
