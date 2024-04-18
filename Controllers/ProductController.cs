@@ -28,11 +28,7 @@ namespace shopapp.ui.Controllers
 
         public IActionResult Details(int id)
         {
-            var p = new Product();
-            p.Name = "Samsung s6";
-            p.Price = 2000;
-            p.Description = "Gozel Telefondur";
-            return View(p);
+            return View(ProductRepository.GetProductById(id));
         }
     }
 
