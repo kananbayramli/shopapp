@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using shopapp.ui.Data;
 using shopapp.ui.Models;
 using shopapp.ui.ViewModels;
 
@@ -17,16 +18,10 @@ namespace shopapp.ui.Controllers
         }
 
         public IActionResult List()
-        {
-            var products = new List<Product>()
-            {
-
-            };
-
-            
+        {     
             var productViewModel = new ProductViewModel()
             {
-                Products = products,
+                Products = ProductRepository.Products,
             };
             return View(productViewModel);
         }
