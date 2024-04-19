@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using shopapp.ui.Data;
 using shopapp.ui.Models;
 using shopapp.ui.ViewModels;
@@ -49,6 +50,7 @@ namespace shopapp.ui.Controllers
 
         public IActionResult Create()
         {
+            ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
             return View();
         }
 
