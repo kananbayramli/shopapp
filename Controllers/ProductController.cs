@@ -52,6 +52,13 @@ namespace shopapp.ui.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Create(Product p)
+        {
+            ProductRepository.AddProduct(p);
+            return RedirectToAction("list");
+        }
+
     }
 
 } 
