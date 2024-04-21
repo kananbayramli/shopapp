@@ -31,6 +31,7 @@ namespace shopapp.ui
 
             if (env.IsDevelopment())
             {
+                SeedDatabase.Seed();
                 app.UseDeveloperExceptionPage();
             }
 
