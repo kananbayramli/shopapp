@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using shopapp.business.Abstract;
+using shopapp.business.Concrete;
 using shopapp.data.Abstract;
 using shopapp.data.Concrete.EfCore;
 
@@ -19,6 +21,7 @@ namespace shopapp.ui
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IProductRepository, EfCoreProductRepository>();
+            services.AddScoped<IProductService, ProductManager>();
             services.AddControllersWithViews();
         }
 

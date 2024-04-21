@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using shopapp.business.Abstract;
 using shopapp.data.Abstract;
 using shopapp.ui.ViewModels;
 
@@ -9,18 +10,18 @@ namespace shopapp.ui.Controllers
 
     public class HomeController : Controller
     {
-        private IProductRepository _productRepository;
+        private IProductService _productService;
 
-        public HomeController(IProductRepository productRepository)
+        public HomeController(IProductService productService)
         {
-            this._productRepository = productRepository;
+            this._productService = productService;
         }
 
         public IActionResult Index()
         {
             var productViewModel = new ProductViewModel()
             {
-                Products = _productRepository.GetAll()
+                Products = _productService.GetAll()
             };
             return View(productViewModel);
         }
