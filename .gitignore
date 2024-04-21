@@ -76,3 +76,6 @@ _[Ss]cripts
 *.vscode
 node_modules
 *.jpg
+shopDb
+shopDb-shm
+shopDb-wal

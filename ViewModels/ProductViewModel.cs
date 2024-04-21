@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using shopapp.ui.Models;
+using shopapp.entity;
 
 namespace shopapp.ui.ViewModels
 {

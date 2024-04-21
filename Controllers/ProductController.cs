@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using shopapp.ui.Data;
-using shopapp.ui.Models;
+using shopapp.entity;
 using shopapp.ui.ViewModels;
 
 namespace shopapp.ui.Controllers
@@ -21,61 +20,60 @@ namespace shopapp.ui.Controllers
 
         public IActionResult List(int? id, string q)
         {
-            var products = ProductRepository.Products;
-            if(id!=null)
-            {
-                products = products.Where(p => p.CategoryId == id).ToList();
-            }
+            // var products = ProductRepository.Products;
+            // if(id!=null)
+            // {
+            //     products = products.Where(p => p.CategoryId == id).ToList();
+            // }
 
-            if(!string.IsNullOrEmpty(q))
-            {
-                products = products.Where(p => p.Name.ToLower().Contains(q) || p.Description.ToLower().Contains(q)).ToList();
-            }
+            // if(!string.IsNullOrEmpty(q))
+            // {
+            //     products = products.Where(p => p.Name.ToLower().Contains(q) || p.Description.ToLower().Contains(q)).ToList();
+            // }
 
-            var productViewModel = new ProductViewModel()
-            {
-                Products = products,
-            };
-            return View(productViewModel);
-            
+            // var productViewModel = new ProductViewModel()
+            // {
+            //     Products = products,
+            // };
+            // return View(productViewModel);
+            return View();
         }
 
         public IActionResult Details(int id)
-
         {
-            return View(ProductRepository.GetProductById(id));
+            return View();
         }
 
 
 
         public IActionResult Create()
         {
-            ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
+            //ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
             return View(new Product());
         }
 
         [HttpPost]
         public IActionResult Create(Product p)
         {
-            if(ModelState.IsValid)
-            {
-                ProductRepository.AddProduct(p);
-                return RedirectToAction("list");
-            }
-            ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
-            return View(p);
+            // if(ModelState.IsValid)
+            // {
+            //     ProductRepository.AddProduct(p);
+            //     return RedirectToAction("list");
+            // }
+            // ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
+            return View();
         }
 
         public IActionResult Edit(int id)
         { 
-            ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
-            return View(ProductRepository.GetProductById(id));
+            //ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
+            return View();
         }
 
         [HttpPost]
         public IActionResult Edit(Product p)
         {
-            ProductRepository.EditProduct(p);
+            //ProductRepository.EditProduct(p);
             return RedirectToAction("list");
         }
 
@@ -83,7 +81,7 @@ namespace shopapp.ui.Controllers
         [HttpPost]
         public IActionResult Delete(int ProductId)
         {
-            ProductRepository.DeleteProduct(ProductId);
+            //ProductRepository.DeleteProduct(ProductId);
             return RedirectToAction("list");
         }
     }
