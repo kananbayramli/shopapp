@@ -21,7 +21,11 @@ namespace shopapp.ui
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IProductRepository, EfCoreProductRepository>();
+            services.AddScoped<ICategoryRepository, EfCoreCategoryRepository>();
+
             services.AddScoped<IProductService, ProductManager>();
+            services.AddScoped<ICategoryService, CategoryManager>();
+            
             services.AddControllersWithViews();
         }
 
