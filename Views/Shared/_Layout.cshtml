@@ -5,35 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/modules/bootstrap/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/style.css">
-    <title>Document</title>
+    <title>Shopapp</title>
 </head>
 <body>
-    @RenderSection("MessageBox", false)
 
     <!-- Navbar -->
     @await Html.PartialAsync("_navbar")
 
     @RenderSection("Jumbotron", false)
-
+    
     <main class="my-3">
         <div class="container">
-            @if(IsSectionDefined("Categories"))
-            {
-                <div class="row  mt-3">
-                    <div class="col-md-3">
-                        @RenderSection("Categories", false)
-                    </div>
-                    <div class="col-md-9">
-                        @RenderBody()
-                    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @RenderBody()
                 </div>
-            }else{
-                <div class="row">
-                    <div class="col-md-12">
-                        @RenderBody()
-                    </div>
-                </div>
-            }     
+            </div>   
         </div>
     </main>
 
@@ -44,6 +31,7 @@
 </body>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 @RenderSection("Scripts", false)
 
 
