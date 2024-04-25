@@ -16,11 +16,13 @@ namespace shopapp.ui.Controllers
             this._productService = productService;
         }
 
-        public IActionResult List(string category)
+        public IActionResult List(string category, int page=1)
         {
+            const int pageSie = 3;
+
             var productViewModel = new ProductListViewModel()
             {
-                Products = _productService.GetProductsByCategory(category)
+                Products = _productService.GetProductsByCategory(category, page, pageSie)
             };
             return View(productViewModel);
         }
