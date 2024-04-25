@@ -18,11 +18,19 @@ namespace shopapp.ui.Controllers
 
         public IActionResult List(string category, int page=1)
         {
-            const int pageSie = 3;
+            const int pageSize = 3;
 
             var productViewModel = new ProductListViewModel()
             {
-                Products = _productService.GetProductsByCategory(category, page, pageSie)
+                PageInfo = new PageInfo() 
+                {
+                    TotalItems = _productService.GetCountByCategory(category),
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    CurrentCategory = category
+                },
+
+                Products = _productService.GetProductsByCategory(category, page, pageSize)
             };
             return View(productViewModel);
         }
