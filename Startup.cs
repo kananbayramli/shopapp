@@ -53,8 +53,16 @@ namespace shopapp.ui
                 endpoints.MapControllerRoute(
                     name: "products",
                     pattern: "products/{category?}",
-                    defaults: new { controller = "Shop",action="list"}
+                    defaults: new { controller = "Shop", action = "List" }
                 );
+
+
+                endpoints.MapControllerRoute(
+                    name: "productdetails",
+                    pattern: "{url}",
+                    defaults: new { controller = "Shop", action = "Details" }
+                );
+
 
                 endpoints.MapControllerRoute(
                     name: "default",
