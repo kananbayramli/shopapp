@@ -13,7 +13,7 @@ namespace shopapp.ui.ViewModels
         public string CurrentCategory { get; set; }
 
 
-        int TotalPages() 
+        public int TotalPages() 
         {
             return (int)Math.Ceiling((decimal)TotalItems / ItemsPerPage);
         }
