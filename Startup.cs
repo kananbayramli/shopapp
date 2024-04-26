@@ -25,7 +25,7 @@ namespace shopapp.ui
 
             services.AddScoped<IProductService, ProductManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
-            
+
             services.AddControllersWithViews();
         }
 
@@ -41,7 +41,7 @@ namespace shopapp.ui
 
             app.UseRouting();
 
-            app.UseStaticFiles( new StaticFileOptions
+            app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(Directory.GetCurrentDirectory(), "node_modules")),
@@ -56,6 +56,11 @@ namespace shopapp.ui
                     defaults: new { controller = "Shop", action = "List" }
                 );
 
+                endpoints.MapControllerRoute(
+                    name: "search",
+                    pattern: "search",
+                    defaults: new { controller = "Shop", action = "search" }
+                );
 
                 endpoints.MapControllerRoute(
                     name: "productdetails",
