@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using shopapp.business.Abstract;
 using shopapp.data.Abstract;
-using shopapp.ui.ViewModels;
+using shopapp.ui.Models;
+
 
 namespace shopapp.ui.Controllers
 {
