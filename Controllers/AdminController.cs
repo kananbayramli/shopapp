@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using shopapp.business.Abstract;
+using shopapp.entity;
 using shopapp.ui.Models;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,28 @@ namespace shopapp.ui.Controllers
             {
                 Products = _productService.GetAll()
             });
+        }
+
+        public IActionResult CreateProduct() 
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateProduct(ProductModel model)
+        {
+            var entity = new Product() 
+            {
+                Name = model.Name,
+                Url = model.Url,
+                Price = model.Price,
+                Description = model.Description,
+                ImageUrl = model.ImageUrl
+            };
+
+            _productService.Create(entity);
+
+            return RedirectToAction("ProductList");
         }
     }
 }
