@@ -9,8 +9,10 @@
                 <tr>
                     <td style="width: 30px;">Id</td>
                     <td style="width: 100px;">Image</td>
-                    <td >Name</td>
+                    <td>Name</td>
                     <td style="width: 20px;">Price</td>
+                    <td style="width: 20px;">IsHome</td>
+                    <td style="width: 20px;">Approved</td>
                     <td style="width: 145px;"></td>
                 </tr>
             </thead>
@@ -26,13 +28,34 @@
                             <td>@item.Name</td>
                             <td>@item.Price</td>
                             <td>
+                                @if (item.IsHome)
+                                {
+                                    <i style="color:forestgreen;" class="fas fa-check-circle"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fas fa-times-circle"></i>
+                                }
+                            </td>
+                            <td>
+                                @if (item.IsApproved)
+                                {
+                                    <i style="color:forestgreen;" class="fas fa-check-circle"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fas fa-times-circle"></i>
+                                }
+                            </td>
+                            <td>
                                 <a href="/admin/products/@item.ProductId" class="btn btn-warning btn-sm mr-2">Edit</a>
                                 <a href="#" class="btn btn-danger btn-sm">Delete</a>
                             </td>
                         </tr>
-                        }
                     }
-                else {
+                }
+                else
+                {
                     @await Html.PartialAsync("_noproduct")
                 }
 

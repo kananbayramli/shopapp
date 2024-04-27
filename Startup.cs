@@ -62,6 +62,12 @@ namespace shopapp.ui
                     defaults: new { controller = "Admin", action = "ProductList" }
                 );
 
+                endpoints.MapControllerRoute(
+                   name: "adminproductlist",
+                   pattern: "admin/products/{id?}",
+                   defaults: new { controller = "Admin", action = "Edit" }
+               );
+
 
                 endpoints.MapControllerRoute(
                     name: "search",
