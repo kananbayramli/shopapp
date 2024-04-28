@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using shopapp.business.Abstract;
 using shopapp.entity;
 using shopapp.ui.Models;
@@ -44,6 +45,14 @@ namespace shopapp.ui.Controllers
             };
 
             _productService.Create(entity);
+
+            var obj = new AlertMessage()
+            {
+                Message = $"{entity.Name} named product is created",
+                AlertType = "success"
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(obj);
 
             return RedirectToAction("ProductList");
         }
@@ -95,6 +104,14 @@ namespace shopapp.ui.Controllers
 
             _productService.Update(entity);
 
+            var obj = new AlertMessage()
+            {
+                Message = $"{entity.Name} named product is uptated",
+                AlertType = "warning"
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(obj);
+
             return RedirectToAction("ProductList");
         }
 
@@ -107,6 +124,15 @@ namespace shopapp.ui.Controllers
             {
                 _productService.Delete(entity);
             }
+
+
+            var obj = new AlertMessage()
+            {
+                Message = $"{entity.Name} named product is deleted",
+                AlertType = "danger"
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(obj);
 
             return RedirectToAction("ProductList");
         }
