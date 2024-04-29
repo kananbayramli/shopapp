@@ -172,7 +172,7 @@ namespace shopapp.ui.Controllers
                 return NotFound();
             }
 
-            var entity = _categoryService.GetById((int)id);
+            var entity = _categoryService.GetByIdWithProducts((int)id);
 
             if (entity == null)
             {
@@ -184,6 +184,7 @@ namespace shopapp.ui.Controllers
                 CategoryId = entity.CategoryId,
                 Name = entity.Name,
                 Url = entity.Url,
+                Products = entity.ProductCategories.Select(p => p.Product).ToList()
             };
 
             return View(model);
