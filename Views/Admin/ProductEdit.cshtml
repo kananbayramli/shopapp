@@ -3,10 +3,11 @@
 <h1 class="h3">Edit Product</h1>
 <hr />
 
-<div class="row">
-    <div class="col-md-8">
-        <form asp-controller="Admin" asp-action="Edit" method="post">
-            <input type="hidden" name="ProductId" value="@Model.ProductId"/>
+<form asp-controller="Admin" asp-action="ProductEdit" method="post">
+
+    <div class="row">
+        <div class="col-md-8">
+            <input type="hidden" name="ProductId" value="@Model.ProductId" />
             <div class="form-group row">
                 <label asp-for="Name" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
@@ -26,13 +27,13 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label  asp-for="Price"  class="col-sm-2 col-form-label"></label>
+                <label asp-for="Price" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     <input class="form-control" asp-for="Price" />
                 </div>
             </div>
             <div class="form-group row">
-                <label asp-for="ImageUrl"  class="col-sm-2 col-form-label"></label>
+                <label asp-for="ImageUrl" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     <input class="form-control" asp-for="ImageUrl" />
                 </div>
@@ -42,17 +43,21 @@
                     <button type="submit" class="btn btn-success">Save</button>
                 </div>
             </div>
-        </form>
-    </div>
-
-    <div class="col-md-4">
-        @foreach (var item in (List<Category>)ViewBag.Categories)
-        {
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" 
-                 id="category_@item.CategoryId" @(Model.SelectedCategories.Any(i => i.CategoryId == item.CategoryId)? "checked":"")>
-                <label class="custom-control-label" for="category_@item.CategoryId">@item.Name</label>
+        </div>
+            <div class="col-md-4">
+                @foreach (var item in (List<Category>)ViewBag.Categories)
+                {
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input"
+                               name="categoryIds"
+                               value="@item.CategoryId"
+                               id="category_@item.CategoryId"
+                               @(Model.SelectedCategories.Any(i => i.CategoryId == item.CategoryId) ? "checked" : "")>
+                        <label class="custom-control-label" for="category_@item.CategoryId">@item.Name</label>
+                    </div>
+                }
             </div>
-        }
+        
     </div>
-</div>
+</form>
+

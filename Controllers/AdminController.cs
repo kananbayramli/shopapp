@@ -133,7 +133,7 @@ namespace shopapp.ui.Controllers
 
 
         [HttpPost]
-        public IActionResult ProductEdit(ProductModel model)
+        public IActionResult ProductEdit(ProductModel model, int[] categoryIds)
         {
             var entity = _productService.GetById(model.ProductId);
 
@@ -149,7 +149,7 @@ namespace shopapp.ui.Controllers
             entity.Url = model.Url;
             entity.ImageUrl = model.ImageUrl;
 
-            _productService.Update(entity);
+            _productService.Update(entity, categoryIds);
 
             var obj = new AlertMessage()
             {
