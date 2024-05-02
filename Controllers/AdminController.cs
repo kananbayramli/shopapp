@@ -81,23 +81,27 @@ namespace shopapp.ui.Controllers
         [HttpPost]
         public IActionResult CategoryCreate(CategoryModel model)
         {
-            var entity = new Category()
+            if (ModelState.IsValid)
             {
-                Name = model.Name,
-                Url = model.Url
-            };
+                var entity = new Category()
+                {
+                    Name = model.Name,
+                    Url = model.Url
+                };
 
-            _categoryService.Create(entity);
+                _categoryService.Create(entity);
 
-            var obj = new AlertMessage()
-            {
-                Message = $"{entity.Name} named category is created",
-                AlertType = "success"
-            };
+                var obj = new AlertMessage()
+                {
+                    Message = $"{entity.Name} named category is created",
+                    AlertType = "success"
+                };
 
-            TempData["message"] = JsonConvert.SerializeObject(obj);
+                TempData["message"] = JsonConvert.SerializeObject(obj);
 
-            return RedirectToAction("CategoryList");
+                return RedirectToAction("CategoryList");
+            }
+            return View(model);
         }
 
 
@@ -180,6 +184,7 @@ namespace shopapp.ui.Controllers
 
         public IActionResult CategoryEdit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -207,28 +212,32 @@ namespace shopapp.ui.Controllers
         [HttpPost]
         public IActionResult CategoryEdit(CategoryModel model)
         {
-            var entity = _categoryService.GetById(model.CategoryId);
-
-            if (entity == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                var entity = _categoryService.GetById(model.CategoryId);
+
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+
+                entity.CategoryId = model.CategoryId;
+                entity.Name = model.Name;
+                entity.Url = model.Url;
+
+                _categoryService.Update(entity);
+
+                var obj = new AlertMessage()
+                {
+                    Message = $"{entity.Name} named category is uptated",
+                    AlertType = "warning"
+                };
+
+                TempData["message"] = JsonConvert.SerializeObject(obj);
+
+                return RedirectToAction("CategoryList");
             }
-
-            entity.CategoryId = model.CategoryId;
-            entity.Name = model.Name;
-            entity.Url = model.Url;
-
-            _categoryService.Update(entity);
-
-            var obj = new AlertMessage()
-            {
-                Message = $"{entity.Name} named category is uptated",
-                AlertType = "warning"
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(obj);
-
-            return RedirectToAction("CategoryList");
+            return View(model);
         }
 
 
