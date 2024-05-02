@@ -45,26 +45,30 @@ namespace shopapp.ui.Controllers
         [HttpPost]
         public IActionResult ProductCreate(ProductModel model)
         {
-            var entity = new Product() 
+            if (ModelState.IsValid) 
             {
-                Name = model.Name,
-                Url = model.Url,
-                Price = model.Price,
-                Description = model.Description,
-                ImageUrl = model.ImageUrl
-            };
+                var entity = new Product()
+                {
+                    Name = model.Name,
+                    Url = model.Url,
+                    Price = model.Price,
+                    Description = model.Description,
+                    ImageUrl = model.ImageUrl
+                };
 
-            _productService.Create(entity);
+                _productService.Create(entity);
 
-            var obj = new AlertMessage()
-            {
-                Message = $"{entity.Name} named product is created",
-                AlertType = "success"
-            };
+                var obj = new AlertMessage()
+                {
+                    Message = $"{entity.Name} named product is created",
+                    AlertType = "success"
+                };
 
-            TempData["message"] = JsonConvert.SerializeObject(obj);
+                TempData["message"] = JsonConvert.SerializeObject(obj);
 
-            return RedirectToAction("ProductList");
+                return RedirectToAction("ProductList");
+            }
+            return View(model);
         }
 
 
@@ -135,31 +139,37 @@ namespace shopapp.ui.Controllers
         [HttpPost]
         public IActionResult ProductEdit(ProductModel model, int[] categoryIds)
         {
-            var entity = _productService.GetById(model.ProductId);
-
-            if (entity == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                var entity = _productService.GetById(model.ProductId);
+
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+
+                entity.ProductId = model.ProductId;
+                entity.Name = model.Name;
+                entity.Price = model.Price;
+                entity.Description = model.Description;
+                entity.Url = model.Url;
+                entity.ImageUrl = model.ImageUrl;
+
+                _productService.Update(entity, categoryIds);
+
+                var obj = new AlertMessage()
+                {
+                    Message = $"{entity.Name} named product is uptated",
+                    AlertType = "warning"
+                };
+
+                TempData["message"] = JsonConvert.SerializeObject(obj);
+
+                return RedirectToAction("ProductList");
             }
 
-            entity.ProductId = model.ProductId;
-            entity.Name = model.Name;
-            entity.Price = model.Price;
-            entity.Description = model.Description;
-            entity.Url = model.Url;
-            entity.ImageUrl = model.ImageUrl;
-
-            _productService.Update(entity, categoryIds);
-
-            var obj = new AlertMessage()
-            {
-                Message = $"{entity.Name} named product is uptated",
-                AlertType = "warning"
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(obj);
-
-            return RedirectToAction("ProductList");
+            ViewBag.Categories = _categoryService.GetAll();
+            return View(model);
         }
 
 

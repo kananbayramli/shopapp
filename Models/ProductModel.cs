@@ -10,19 +10,25 @@ namespace shopapp.ui.Models
     public class ProductModel
     {
         public int ProductId { get; set; }
-
+        [Required]
         [Display(Name="Name", Prompt ="Enter product name")]
         public string Name { get; set; }
 
+        [Required]
         [Display(Name = "Url", Prompt = "Enter unique url name")]
         public string Url { get; set; }
 
+        [Required]
         [Display(Name = "Price", Prompt = "Enter product price")]
+        [Range(1,10000)]
         public decimal? Price { get; set; }
 
+
+        [Required]
         [Display(Name = "Description", Prompt = "Enter your description")]
         public string Description { get; set; }
 
+        [Required]
         [Display(Name = "Image", Prompt = "Add image url")]
         public string ImageUrl { get; set; }
 
