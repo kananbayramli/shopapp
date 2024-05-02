@@ -10,7 +10,8 @@ namespace shopapp.ui.Models
     public class ProductModel
     {
         public int ProductId { get; set; }
-        [Required]
+
+        //[Required]
         [Display(Name="Name", Prompt ="Enter product name")]
         public string Name { get; set; }
 
@@ -18,9 +19,10 @@ namespace shopapp.ui.Models
         [Display(Name = "Url", Prompt = "Enter unique url name")]
         public string Url { get; set; }
 
-        [Required]
+        
         [Display(Name = "Price", Prompt = "Enter product price")]
-        [Range(1,10000)]
+        //[Required]
+        //[Range(1,10000)]
         public decimal? Price { get; set; }
 
 

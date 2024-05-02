@@ -56,17 +56,13 @@ namespace shopapp.ui.Controllers
                     ImageUrl = model.ImageUrl
                 };
 
-                _productService.Create(entity);
-
-                var obj = new AlertMessage()
+                if (_productService.Create(entity))
                 {
-                    Message = $"{entity.Name} named product is created",
-                    AlertType = "success"
-                };
-
-                TempData["message"] = JsonConvert.SerializeObject(obj);
-
-                return RedirectToAction("ProductList");
+                    CreateMessage("Product is create", "success");
+                    return RedirectToAction("ProductList");
+                }
+                CreateMessage(_productService.ErrorMessage, "danger");
+                return View(model);
             }
             return View(model);
         }
@@ -292,14 +288,23 @@ namespace shopapp.ui.Controllers
         }
 
 
-
-
-
         [HttpPost]
         public IActionResult DeleteFromCategory(int productId, int categoryId) 
         {
             _categoryService.DeleteFromCategory(productId, categoryId);
             return Redirect("/admin/categories/"+categoryId);
+        }
+
+
+        private void CreateMessage(string message, string alerttype) 
+        {
+            var obj = new AlertMessage()
+            {
+                Message = message,
+                AlertType = alerttype
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(obj);
         }
 
 
