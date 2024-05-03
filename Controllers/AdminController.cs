@@ -127,6 +127,8 @@ namespace shopapp.ui.Controllers
                 Description = entity.Description,
                 Url = entity.Url,
                 ImageUrl = entity.ImageUrl,
+                IsApproved = entity.IsApproved,
+                IsHome = entity.IsHome,
                 SelectedCategories = entity.ProductCategories.Select(i => i.Category).ToList()
             };
 
@@ -153,21 +155,18 @@ namespace shopapp.ui.Controllers
                 entity.Price = model.Price;
                 entity.Description = model.Description;
                 entity.Url = model.Url;
+                entity.IsApproved = model.IsApproved;
+                entity.IsHome = model.IsHome;
                 entity.ImageUrl = model.ImageUrl;
 
-                _productService.Update(entity, categoryIds);
-
-                var obj = new AlertMessage()
+                
+                if (_productService.Update(entity, categoryIds))
                 {
-                    Message = $"{entity.Name} named product is uptated",
-                    AlertType = "warning"
-                };
-
-                TempData["message"] = JsonConvert.SerializeObject(obj);
-
-                return RedirectToAction("ProductList");
+                    CreateMessage("Product is updated", "success");
+                    return RedirectToAction("ProductList");
+                }
+                CreateMessage(_productService.ErrorMessage, "danger");
             }
-
             ViewBag.Categories = _categoryService.GetAll();
             return View(model);
         }
