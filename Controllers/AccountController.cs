@@ -88,5 +88,11 @@ namespace shopapp.ui.Controllers
             //ModelState.AddModelError("RePassword", "Tekrar parol duz deyil");
             return View(model);
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Redirect("~/");
+        }
     }
 }
