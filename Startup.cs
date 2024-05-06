@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
@@ -13,6 +15,7 @@ using shopapp.business.Abstract;
 using shopapp.business.Concrete;
 using shopapp.data.Abstract;
 using shopapp.data.Concrete.EfCore;
+using shopapp.ui.Identity;
 
 namespace shopapp.ui
 {
@@ -20,6 +23,9 @@ namespace shopapp.ui
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlite("Data Source=shopDb"));
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+
             services.AddScoped<IProductRepository, EfCoreProductRepository>();
             services.AddScoped<ICategoryRepository, EfCoreCategoryRepository>();
 
@@ -39,6 +45,7 @@ namespace shopapp.ui
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseStaticFiles(new StaticFileOptions
