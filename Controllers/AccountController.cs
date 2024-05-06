@@ -7,6 +7,7 @@ using shopapp.ui.Models;
 
 namespace shopapp.ui.Controllers
 {
+    //[AutoValidateAntiforgeryToken] //All action
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -27,6 +28,7 @@ namespace shopapp.ui.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
         {
             if (!ModelState.IsValid)
@@ -62,6 +64,7 @@ namespace shopapp.ui.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
         { 
             if (!ModelState.IsValid)
