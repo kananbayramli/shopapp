@@ -81,6 +81,7 @@ namespace shopapp.ui
 
             app.UseAuthentication();
             app.UseRouting();
+            app.UseAuthorization();
 
             app.UseStaticFiles(new StaticFileOptions
             {
