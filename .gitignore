@@ -79,3 +79,4 @@ node_modules
 shopDb
 shopDb-shm
 shopDb-wal
+appsettings.json
