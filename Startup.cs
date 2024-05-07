@@ -40,7 +40,7 @@ namespace shopapp.ui
                 options.Lockout.AllowedForNewUsers = true;  //activate locout
 
                 options.User.RequireUniqueEmail = true;
-                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedEmail = true;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
             });
 

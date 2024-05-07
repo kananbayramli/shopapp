@@ -1,7 +1,9 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 using shopapp.ui.Identity;
 using shopapp.ui.Models;
 
@@ -41,17 +43,24 @@ namespace shopapp.ui.Controllers
 
             if(user == null)
             {
-                ModelState.AddModelError("", "Your username is not true");
+                CreateMessage("Your username is not true", "danger");
                 return View(model);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user, model.Password,true, false);
+            if (!await _userManager.IsEmailConfirmedAsync(user))
+            {
+                CreateMessage("Please confirm your account. We send link to your email.", "warning");
+                return View(model);
+            }
+
+
+            var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, false);
 
             if (result.Succeeded)
             {
                 return Redirect(model.ReturnUrl??"~/");
             }
-            ModelState.AddModelError("", "Your username or password is not true");
+            CreateMessage("Your username or password is not true", "danger");
             return View(model);
         }
 
@@ -84,7 +93,13 @@ namespace shopapp.ui.Controllers
             if (result.Succeeded)
             {
                 // generate token
+                var tokenCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var url = Url.Action("ConfirmEmail", "Account", new{
+                    userId = user.Id,
+                    token = tokenCode
+                });
                 // email confirm
+                Console.WriteLine(url);
                 return RedirectToAction("Login", "Account");
             }
 
@@ -96,6 +111,42 @@ namespace shopapp.ui.Controllers
         {
             await _signInManager.SignOutAsync();
             return Redirect("~/");
+        }
+
+
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                CreateMessage("Invalid token", "danger");
+                return View();
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var result = await _userManager.ConfirmEmailAsync(user, token);
+                if (result.Succeeded)
+                {
+                    CreateMessage("Your account has been confirmed", "success");
+                    return View();
+                }
+            }
+            CreateMessage("Your account has NOT been confirmed", "warning");
+            return View();
+        }
+
+
+
+        private void CreateMessage(string message, string alerttype)
+        {
+            var obj = new AlertMessage()
+            {
+                Message = message,
+                AlertType = alerttype
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(obj);
         }
     }
 }
