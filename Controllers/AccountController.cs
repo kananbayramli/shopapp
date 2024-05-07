@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
+using shopapp.ui.EmailServices;
 using shopapp.ui.Identity;
 using shopapp.ui.Models;
 
@@ -14,11 +15,13 @@ namespace shopapp.ui.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IEmailSender _emailSender;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _emailSender = emailSender;
         }
 
         public IActionResult Login(string ReturnUrl=null)
@@ -99,7 +102,7 @@ namespace shopapp.ui.Controllers
                     token = tokenCode
                 });
                 // email confirm
-                Console.WriteLine(url);
+                await _emailSender.SendEmailAsync(model.Email, "Hi, Confirm your email :)", $"To confirm your email <a href='https://localhost:5001{url}'>clik_here</a>");
                 return RedirectToAction("Login", "Account");
             }
 

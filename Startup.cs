@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
@@ -15,12 +16,20 @@ using shopapp.business.Abstract;
 using shopapp.business.Concrete;
 using shopapp.data.Abstract;
 using shopapp.data.Concrete.EfCore;
+using shopapp.ui.EmailServices;
 using shopapp.ui.Identity;
 
 namespace shopapp.ui
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>(options => options.UseSqlite("Data Source=shopDb"));
@@ -66,6 +75,15 @@ namespace shopapp.ui
 
             services.AddScoped<IProductService, ProductManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
+
+            services.AddScoped<IEmailSender, SmtpEmailSender>(i =>
+            new SmtpEmailSender(
+                _configuration["EmailSender:Host"],
+                _configuration.GetValue<int>("EmailSender:Port"),
+                _configuration.GetValue<bool>("EmailSender:EnableSSL"),
+                _configuration["EmailSender:UserName"],
+                _configuration["EmailSender:Password"]
+            ));
 
             services.AddControllersWithViews();
         }
