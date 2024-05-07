@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using shopapp.business.Abstract;
 using shopapp.entity;
+using shopapp.ui.Extensions;
 using shopapp.ui.Models;
 using System;
 using System.Collections.Generic;
@@ -62,10 +63,21 @@ namespace shopapp.ui.Controllers
 
                 if (_productService.Create(entity))
                 {
-                    CreateMessage("Product is create", "success");
+                    TempData.Put("message", new AlertMessage() 
+                    { 
+                        Title = "New Product",
+                        Message = "Product is create",
+                        AlertType = "success"
+                    });
                     return RedirectToAction("ProductList");
                 }
-                CreateMessage(_productService.ErrorMessage, "danger");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "Something went wrong :(",
+                    Message = _productService.ErrorMessage,
+                    AlertType = "danger"
+                });
+
                 return View(model);
             }
             return View(model);
@@ -91,13 +103,12 @@ namespace shopapp.ui.Controllers
 
                 _categoryService.Create(entity);
 
-                var obj = new AlertMessage()
+                TempData.Put("message", new AlertMessage() 
                 {
+                    Title = "Shop App Category",
                     Message = $"{entity.Name} named category is created",
                     AlertType = "success"
-                };
-
-                TempData["message"] = JsonConvert.SerializeObject(obj);
+                });
 
                 return RedirectToAction("CategoryList");
             }
@@ -179,17 +190,25 @@ namespace shopapp.ui.Controllers
                 
                 if (_productService.Update(entity, categoryIds))
                 {
-                    CreateMessage("Product is updated", "success");
+                    TempData.Put("message", new AlertMessage()
+                    {
+                        Title = "Updated",
+                        Message = "Product is updated",
+                        AlertType = "success"
+                    });
                     return RedirectToAction("ProductList");
                 }
-                CreateMessage(_productService.ErrorMessage, "danger");
+
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "Something went wrong :(",
+                    Message = _productService.ErrorMessage,
+                    AlertType = "danger"
+                });
             }
             ViewBag.Categories = _categoryService.GetAll();
             return View(model);
         }
-
-
-
 
 
 
@@ -239,13 +258,13 @@ namespace shopapp.ui.Controllers
 
                 _categoryService.Update(entity);
 
-                var obj = new AlertMessage()
+
+                TempData.Put("message", new AlertMessage()
                 {
+                    Title = "Shop App Category",
                     Message = $"{entity.Name} named category is uptated",
                     AlertType = "warning"
-                };
-
-                TempData["message"] = JsonConvert.SerializeObject(obj);
+                });
 
                 return RedirectToAction("CategoryList");
             }
@@ -265,13 +284,12 @@ namespace shopapp.ui.Controllers
             }
 
 
-            var obj = new AlertMessage()
+            TempData.Put("message", new AlertMessage()
             {
+                Title = "Shop App Product",
                 Message = $"{entity.Name} named product is deleted",
                 AlertType = "danger"
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(obj);
+            });
 
             return RedirectToAction("ProductList");
         }
@@ -291,14 +309,12 @@ namespace shopapp.ui.Controllers
                 _categoryService.Delete(entity);
             }
 
-
-            var obj = new AlertMessage()
+            TempData.Put("message", new AlertMessage()
             {
+                Title = "Shop App Category",
                 Message = $"{entity.Name} named category is deleted",
                 AlertType = "danger"
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(obj);
+            });
 
             return RedirectToAction("CategoryList");
         }
@@ -310,19 +326,5 @@ namespace shopapp.ui.Controllers
             _categoryService.DeleteFromCategory(productId, categoryId);
             return Redirect("/admin/categories/"+categoryId);
         }
-
-
-        private void CreateMessage(string message, string alerttype) 
-        {
-            var obj = new AlertMessage()
-            {
-                Message = message,
-                AlertType = alerttype
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(obj);
-        }
-
-
     }
 }

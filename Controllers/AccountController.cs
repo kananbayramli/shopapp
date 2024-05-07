@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using shopapp.ui.EmailServices;
+using shopapp.ui.Extensions;
 using shopapp.ui.Identity;
 using shopapp.ui.Models;
 
@@ -46,13 +47,23 @@ namespace shopapp.ui.Controllers
 
             if(user == null)
             {
-                CreateMessage("Your username is not true", "danger");
+                TempData.Put("message", new AlertMessage() 
+                { 
+                    Title = "Invalid Username",
+                    Message = "Your username is not true",
+                    AlertType = "danger"
+                });
                 return View(model);
             }
 
             if (!await _userManager.IsEmailConfirmedAsync(user))
             {
-                CreateMessage("Please confirm your account. We send link to your email.", "warning");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "Account Confirmation",
+                    Message = "Please confirm your account. We send link to your email.",
+                    AlertType = "warning"
+                });
                 return View(model);
             }
 
@@ -63,7 +74,12 @@ namespace shopapp.ui.Controllers
             {
                 return Redirect(model.ReturnUrl??"~/");
             }
-            CreateMessage("Your username or password is not true", "danger");
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "Something went wrong :(",
+                Message = "Your username or password is not true",
+                AlertType = "danger"
+            });
             return View(model);
         }
 
@@ -121,7 +137,12 @@ namespace shopapp.ui.Controllers
         {
             if (userId == null || token == null)
             {
-                CreateMessage("Invalid token", "danger");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "Something went wrong :(",
+                    Message = "Invalid token",
+                    AlertType = "danger"
+                });
                 return View();
             }
 
@@ -131,11 +152,22 @@ namespace shopapp.ui.Controllers
                 var result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
                 {
-                    CreateMessage("Your account has been confirmed", "success");
+                    TempData.Put("message", new AlertMessage()
+                    {
+                        Title = "Hi :)",
+                        Message = "Your account has been confirmed",
+                        AlertType = "success"
+                    });
                     return View();
                 }
             }
-            CreateMessage("Your account has NOT been confirmed", "warning");
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "Something went wrong :(",
+                Message = "Your account has NOT been confirmed",
+                AlertType = "warning"
+            });
             return View();
         }
 
@@ -207,23 +239,6 @@ namespace shopapp.ui.Controllers
             }
 
             return View(model);
-        }
-
-
-
-
-
-
-
-        private void CreateMessage(string message, string alerttype)
-        {
-            var obj = new AlertMessage()
-            {
-                Message = message,
-                AlertType = alerttype
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(obj);
         }
     }
 }
