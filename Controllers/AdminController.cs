@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace shopapp.ui.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
         private readonly IProductService _productService;

@@ -11,7 +11,7 @@ using shopapp.ui.Models;
 
 namespace shopapp.ui.Controllers
 {
-    //[AutoValidateAntiforgeryToken] //All action
+    [AutoValidateAntiforgeryToken] //All action
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -245,6 +245,12 @@ namespace shopapp.ui.Controllers
             }
 
             return View(model);
+        }
+
+
+        public IActionResult AccessDenied() 
+        {
+            return View();
         }
     }
 }
