@@ -129,6 +129,12 @@ namespace shopapp.ui.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "Account closed",
+                Message = "Your account closed securely",
+                AlertType = "warning"
+            });
             return Redirect("~/");
         }
 

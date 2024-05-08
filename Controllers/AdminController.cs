@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using shopapp.business.Abstract;
 using shopapp.entity;
 using shopapp.ui.Extensions;
+using shopapp.ui.Identity;
 using shopapp.ui.Models;
 using System;
 using System.Collections.Generic;
@@ -19,11 +21,49 @@ namespace shopapp.ui.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
-        public AdminController(IProductService productService, ICategoryService categoryService)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+
+        public AdminController(IProductService productService, ICategoryService categoryService, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
+
+
+        public IActionResult RoleList() 
+        {
+            return View(_roleManager.Roles);
+        }
+
+        public IActionResult RoleCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async  Task<IActionResult> RoleCreate( RoleModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await  _roleManager.CreateAsync(new IdentityRole(model.Name));
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("RoleList");
+                }
+                else 
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return View(model);
+        }
+
 
 
         public IActionResult ProductList()
@@ -114,9 +154,6 @@ namespace shopapp.ui.Controllers
             }
             return View(model);
         }
-
-
-
 
 
 
@@ -211,8 +248,6 @@ namespace shopapp.ui.Controllers
         }
 
 
-
-
         public IActionResult CategoryEdit(int? id)
         {
 
@@ -272,8 +307,6 @@ namespace shopapp.ui.Controllers
         }
 
 
-
-
         public IActionResult DeleteProduct(int productId) 
         {
             var entity = _productService.GetById(productId);
@@ -293,10 +326,6 @@ namespace shopapp.ui.Controllers
 
             return RedirectToAction("ProductList");
         }
-
-
-
-
 
 
 
