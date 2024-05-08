@@ -111,11 +111,6 @@ namespace shopapp.ui
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                   name: "adminuseredit",
-                   pattern: "admin/user/{id?}",
-                   defaults: new { controller = "Admin", action = "UserEdit" }
-                );
 
                 endpoints.MapControllerRoute(
                     name: "adminusers",
@@ -133,6 +128,12 @@ namespace shopapp.ui
                     name: "adminrolecreate",
                     pattern: "admin/role/create",
                     defaults: new { controller = "Admin", action = "RoleCreate" }
+                );
+
+                endpoints.MapControllerRoute(
+                   name: "adminuseredit",
+                   pattern: "admin/user/{id?}",
+                   defaults: new { controller = "Admin", action = "UserEdit" }
                 );
 
                 endpoints.MapControllerRoute(

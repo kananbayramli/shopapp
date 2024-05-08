@@ -32,8 +32,12 @@ namespace shopapp.ui.Controllers
             _userManager = userManager;
         }
 
+        public IActionResult UserList() 
+        {
+            return View(_userManager.Users);
+        }
 
-        public async  Task<IActionResult> UserEdit(string id)
+        public async Task<IActionResult> UserEdit(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user!=null)
@@ -56,15 +60,35 @@ namespace shopapp.ui.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UserEdit(UserDetailsModel model)
+        public async Task<IActionResult> UserEdit(UserDetailsModel model, string[] selectedRoles)
         {
-            return View();
-        }
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(model.UserId);
+                if (user!=null)
+                {
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.UserName = model.UserName;
+                    user.Email = model.Email;
+                    user.EmailConfirmed = model.EmailConfirmed;
 
+                    var result = await _userManager.UpdateAsync(user);
 
-            public IActionResult UserList() 
-        {
-            return View(_userManager.Users);
+                    if (result.Succeeded)
+                    {
+                        var userRoles = await _userManager.GetRolesAsync(user);
+                        selectedRoles = selectedRoles ?? new string[]{};
+                        await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles).ToArray<string>());
+                        await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles).ToArray<string>());
+
+                        return Redirect("/admin/user/list");
+                    }
+                }
+                return Redirect("/admin/user/list");
+            }
+
+            return View(model);
         }
 
         public async  Task<IActionResult> RoleEdit(string id)
