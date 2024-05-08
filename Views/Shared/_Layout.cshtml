@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    @RenderSection("Css", false)
     <link rel="stylesheet" href="~/css/style.css">
     <title>Shopapp</title>
 </head>
@@ -14,13 +15,13 @@
     @await Html.PartialAsync("_navbar")
 
     @RenderSection("Jumbotron", false)
-    
+
     <main class="my-3">
         <div class="container">
 
             @if (TempData["message"] != null)
             {
-                <partial name="_ResultMessage" model="@(TempData.Get<AlertMessage>("message"))"/>
+                <partial name="_ResultMessage" model="@(TempData.Get<AlertMessage>("message"))" />
             }
 
             @RenderBody()
@@ -30,14 +31,9 @@
     <footer class="py-3 bg-dark text-white text-center p-5">
         Shop App | 2024
     </footer>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    @*integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous" datatables.js not working with this*@
+    @RenderSection("Scripts", false)
 
 </body>
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-
-@RenderSection("Scripts", false)
-
-
-
 </html>

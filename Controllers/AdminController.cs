@@ -32,6 +32,14 @@ namespace shopapp.ui.Controllers
             _userManager = userManager;
         }
 
+
+        public IActionResult UserList() 
+        {
+            return View(_userManager.Users);
+        }
+
+
+
         public async  Task<IActionResult> RoleEdit(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
@@ -94,7 +102,7 @@ namespace shopapp.ui.Controllers
             return Redirect("/admin/role/"+model.RoleId);
         }
 
-            public IActionResult RoleList() 
+        public IActionResult RoleList() 
         {
             return View(_roleManager.Roles);
         }
@@ -124,8 +132,6 @@ namespace shopapp.ui.Controllers
             }
             return View(model);
         }
-
-
 
         public IActionResult ProductList()
         {
