@@ -2,12 +2,13 @@
 
 @section Css
 { 
-    <link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 }
 
 @section Scripts
 {
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable();
@@ -20,6 +21,7 @@
         <h1 class="h3">User List</h1>
         <hr />
         <a class="btn btn-primary btn-sm" href="/admin/user/create">Create User</a>
+        <hr />
         <table data-page-length='5' id="myTable" class="table table-bordered mt-2">
             <thead>
                 <tr>

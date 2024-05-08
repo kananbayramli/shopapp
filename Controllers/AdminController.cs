@@ -33,12 +33,39 @@ namespace shopapp.ui.Controllers
         }
 
 
-        public IActionResult UserList() 
+        public async  Task<IActionResult> UserEdit(string id)
         {
-            return View(_userManager.Users);
+            var user = await _userManager.FindByIdAsync(id);
+            if (user!=null)
+            {
+                var selectedRoles = await _userManager.GetRolesAsync(user);
+                var roles = _roleManager.Roles.Select(i => i.Name);
+
+                ViewBag.Roles = roles;
+                return View(new UserDetailsModel() { 
+                    UserId = user.Id,
+                    UserName = user.UserName,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    EmailConfirmed = user.EmailConfirmed,
+                    SelectedRoles = selectedRoles
+                });
+            }
+            return Redirect("~/admin/user/list");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UserEdit(UserDetailsModel model)
+        {
+            return View();
         }
 
 
+            public IActionResult UserList() 
+        {
+            return View(_userManager.Users);
+        }
 
         public async  Task<IActionResult> RoleEdit(string id)
         {
