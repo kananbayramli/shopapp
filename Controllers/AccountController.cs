@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
+using shopapp.business.Abstract;
 using shopapp.ui.EmailServices;
 using shopapp.ui.Extensions;
 using shopapp.ui.Identity;
@@ -17,12 +18,14 @@ namespace shopapp.ui.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly ICartService _cartService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender, ICartService cartService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _emailSender = emailSender;
+            _cartService = cartService;
         }
 
         public IActionResult Login(string ReturnUrl=null)
@@ -158,6 +161,9 @@ namespace shopapp.ui.Controllers
                 var result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
                 {
+                    //Cart Object created
+                    _cartService.InitializeCart(user.Id);
+
                     TempData.Put("message", new AlertMessage()
                     {
                         Title = "Hi :)",
