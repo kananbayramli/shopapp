@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Linq;
 
 namespace shopapp.ui.Models
 {
@@ -7,6 +7,11 @@ namespace shopapp.ui.Models
     {
         public int CartId { get; set; }
         public List<CartItemModel> CartItems { get; set; }
+
+        public decimal TotalPrice() 
+        {
+            return CartItems.Sum(i => i.Price * i.Quantity);
+        }
     }
 
     public class CartItemModel 
