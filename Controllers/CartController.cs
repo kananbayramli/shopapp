@@ -46,5 +46,14 @@ namespace shopapp.ui.Controllers
             _cartService.AddToCart(userId, productId, quantity);
             return RedirectToAction("Index");
         }
+
+
+        [HttpPost]
+        public IActionResult DeleteFromCart(int productId) 
+        {
+            var userId = _userManager.GetUserId(User);
+            _cartService.DeleteFromCart(userId, productId);
+            return RedirectToAction("Index");
+        }
     }
 }
