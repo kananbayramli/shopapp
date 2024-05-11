@@ -113,6 +113,11 @@ namespace shopapp.ui
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "cart",
+                    pattern: "cart",
+                    defaults: new { controller = "Cart", action = "Index" }
+                );
 
                 endpoints.MapControllerRoute(
                     name: "adminusers",
