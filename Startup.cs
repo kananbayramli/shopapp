@@ -114,6 +114,12 @@ namespace shopapp.ui
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "checkout",
+                    pattern: "checkout",
+                    defaults: new { controller = "Cart", action = "Checkout" }
+                );
+
+                endpoints.MapControllerRoute(
                     name: "cart",
                     pattern: "cart",
                     defaults: new { controller = "Cart", action = "Index" }
