@@ -73,10 +73,12 @@ namespace shopapp.ui
             services.AddScoped<IProductRepository, EfCoreProductRepository>();
             services.AddScoped<ICategoryRepository, EfCoreCategoryRepository>();
             services.AddScoped<ICartRepository, EfCoreCartRepository>();
+            services.AddScoped<IOrderRepository, EfCoreOrderRepository>();
 
             services.AddScoped<IProductService, ProductManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<ICartService, CartManager>();
+            services.AddScoped<IOrderService, OrderManager>();
 
             services.AddScoped<IEmailSender, SmtpEmailSender>(i =>
             new SmtpEmailSender(
