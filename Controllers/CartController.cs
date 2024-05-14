@@ -118,7 +118,7 @@ namespace shopapp.ui.Controllers
                 if (payment.Status == "success")
                 {
                     SaveOrder(model, userId, payment);
-                    //ClearCart(userId);
+                    ClearCart(model.CartModel.CartId);
                     return View("Success");
                 }
                 else 
@@ -132,12 +132,13 @@ namespace shopapp.ui.Controllers
                     TempData["message"] = JsonConvert.SerializeObject(msg);
                 }
             }
-            return View();
+            return View(model);
         }
 
-        //private void ClearCart(string userId)
-        //{
-        //}
+        private void ClearCart(int cartId)
+        {
+            _cartService.ClearCart(cartId);
+        }
 
         private void SaveOrder(OrderModel model, string userId, Payment payment)
         {

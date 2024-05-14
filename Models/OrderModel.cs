@@ -20,6 +20,6 @@ namespace shopapp.ui.Models
         public string ExpirationYear { get; set; }
         public string Cvc { get; set; }
 
-        public CartModel CartModel { get; set; }
+        public CartModel CartModel { get; set; } 
     }
 }

@@ -83,7 +83,7 @@
                     <div>
                         <h6>@item.Name</h6>
                     </div>
-                    <span class="text-muted">@item.Price.ToString("c")</span>
+                    <span class="text-muted">@(item.Price * item.Quantity) $</span>
                 </li>
             }
 
